@@ -24,10 +24,10 @@ Currently, the application allows the operator to perform the following actions
 AADShell was developed in both Windows and Debian Linux environments with python 3.9 and python 3.10 respectively.
 
 # Setup
-[Setup Instructions](https://github.com/wizardy0ga/_AADShell/blob/main/docs/setup_instructions.txt)
+[Setup Instructions](https://github.com/wizardy0ga/AADShell/blob/main/docs/setup_instructions.txt)
 
 # Further Information
-[Information File](https://github.com/wizardy0ga/_AADShell/blob/main/docs/Information.txt)
+[Information File](https://github.com/wizardy0ga/AADShell/blob/main/docs/Information.txt)
 
 # Notes
 
