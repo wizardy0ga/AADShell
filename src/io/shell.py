@@ -38,6 +38,9 @@ class AADShell(Cmd):
         self.dictAPIKeyStore = keyStore                             # API Keys for API's other than graph
         self.dictDataStore = dataStore                              # Storage for API authN data
         self.strCurrTenant = ''                                     # The tenant code for the current working tenant
+        if self.strCurrTenant == '':
+            stdout.printError('The current working tenant has not been set. Quitting...')
+            exit()
         self.strTenantDomain = None                                 # Domain string for tenant in format @company.com
         self.listAvailTenants = [key for key in dataStore.keys()]   # List available tenants from the data store
         self.objAccessTokenCache = TokenCache()                     # Root token cache to store non-persistent tokens in
