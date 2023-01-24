@@ -1,0 +1,72 @@
+################################################################
+#           ██╗    ██╗██╗  ██╗ █████╗ ████████╗██████╗
+#           ██║    ██║██║  ██║██╔══██╗╚══██╔══╝╚════██╗
+#           ██║ █╗ ██║███████║███████║   ██║     ▄███╔╝
+#           ██║███╗██║██╔══██║██╔══██║   ██║     ▀▀══╝
+#           ╚███╔███╔╝██║  ██║██║  ██║   ██║     ██╗
+#            ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝     ╚═╝
+################################################################
+#                     What is AAD Shell?
+################################################################
+
+AADShell is a Microsoft Graph application that allows the operator
+to retrieve sign-in data from user objects in Azure Active Directory tenants.
+The operator can parse and print sign-in data to stdout OR the
+operator can retrieve IP addresses used to create sign-in events on user
+objects within the current working tenant directory and pass them to other
+API's [Virus Total, Abuse IP Database, IP Geolocation] for further enumeration
+into the public IP utilized in the event. The user can also to switch between the
+tenants without having to close the program, allowing for quicker log analysis
+in a multi-tenant environment, while providing insight into the activity that
+is occurring on a user's account.
+
+
+###############################################################
+#               ██╗  ██╗ ██████╗ ██╗    ██╗██████╗
+#               ██║  ██║██╔═══██╗██║    ██║╚════██╗
+#               ███████║██║   ██║██║ █╗ ██║  ▄███╔╝
+#               ██╔══██║██║   ██║██║███╗██║  ▀▀══╝
+#               ██║  ██║╚██████╔╝╚███╔███╔╝  ██╗
+#               ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝   ╚═╝
+###############################################################
+#                  How does AADShell operate?
+###############################################################
+
+AADShell operates on the OAuth2 Client Credentials grant flow. Utilizing
+a client secret from a registered application within the tenant directory,
+the application can authenticate to the tenant and retrieve sign-in data.
+Currently, AADShell utilizes the AES-128 cipher for securing the client
+secrets and non-graph API keys.
+
+When the program launches, the user is prompted for a decryption key.
+Continuation of execution depends on the outcome of the initial decryption.
+If the decryption is successful, both pairs of secrets will be stored in memory
+as dictionaries for the application to use. The app then retrieves an
+access token from the tenant authority with the client secret and utilizes
+the token to make calls to Graph. If the user opts to switch tenants,
+the program checks the client-side token cache for any available tokens.
+If no token is available, the program reaches out to the authority to retrieve a new token.
+
+The store directory contains the encrypted secrets. Data.txt is the client secret
+store and kdata.txt is the API key store. Both of these files utilize JSON which
+python recognizes as a dictionary object, allowing a map to be created for the
+program to flip through tenants.
+
+
+###############################################################
+#           ██╗    ██╗██╗  ██╗██╗   ██╗██████╗
+#           ██║    ██║██║  ██║╚██╗ ██╔╝╚════██╗
+#           ██║ █╗ ██║███████║ ╚████╔╝   ▄███╔╝
+#           ██║███╗██║██╔══██║  ╚██╔╝    ▀▀══╝
+#           ╚███╔███╔╝██║  ██║   ██║     ██╗
+#            ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝     ╚═╝
+###############################################################
+#            Why does this application exist?
+###############################################################
+
+This application exists to reduce the amount of time spent in between loading
+pages when working in a multi-tenant Azure Active Directory / Microsoft 365
+Environment. By utilizing the Graph API to retrieve sign-in data, a massive
+amount of time is saved in between account analysis. Workflow automation was
+the primary reason behind this application.
+

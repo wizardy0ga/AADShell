@@ -1,0 +1,93 @@
+1. Generate a decryption key with the generate_key method from the Fernet class in the cryptography library via python.
+   Secure the key in your credential manager or other secure location.
+
+
+2. Go to the tools directory and create a file called plain.json. In the JSON file, create a JSON object
+   with the following structure. The tenant code will represent each tenant within the object. Ensure that UPPER CASING
+   is used when creating the tenant code key, ex -> Company Name: Microsoft, Tenant Code: MST
+
+
+   {
+   	TENANT_CODE: {
+   		id: CLIENT_ID,
+   		secret: CLIENT_SECRET,
+   		auth: https://login.microsoftonline.com/TENANT_ID,
+   		domain: @TENANT.DOMAIN,
+   		name: NAME_OF_TENANT
+
+   		}
+   }
+
+
+3. In an Azure Active Directory tenant, create an app registration with the following parameters:
+
+	Supported Account Types
+	- Accounts in this organizational directory only
+
+	Redirect URI
+	- Platform: Web, URI: https://localhost
+
+
+4. In the new application, give the API the following permissions:
+
+	 - AuditLog.Read.All
+	 - Directory.Read.All
+
+
+5. Create a client secret for the application. Record this value in the JSON object.
+
+
+6. Populate the client ID and authority keys with the information from the overview section of the newly created
+   application, into the JSON object.
+
+
+7. Repeat steps 2 through 6 for each tenant that you would like to access with the program. You'll need to add each
+   new tenant as a key of the original JSON object.
+
+
+8. Encrypt the plain.json file with the encryption script (encrypt.py) and the key that you created. Follow
+   the directions in the script. A file (data.txt) will be placed in the store directory. This is the secret
+   store. NOTE: When decrypting the store, you will need to use decrypt.py which places the decrypted JSON
+   object into plain.json, where it can be modified and re-encrypted with the encrypt.py
+
+
+9. Retrieve API keys by creating accounts at the following locations:
+
+	Abuse IP Database: https://abuseipdb.com
+	Virus Total: https://virustotal.com
+	IP Geolocate: https://ipgeolocation.io
+
+
+10. Create another JSON object in tools/plain.json with the following format. Ensure that the EXACT key codes
+   are used as shown here:
+
+   {
+   	ABDB: API_KEY,
+   	VTDB: API_KEY,
+   	IPGEO: API_KEY
+   }
+
+
+11. Encrypt the plain.json file with the encryption script. If directions were followed, you should have the file
+    kdata.txt in the store directory.
+
+
+12. DELETE plain.json
+
+
+13. Open src/io/shell.py and go to line 40. Find the variable self.strCurrTenant and set the value to a tenant code
+    string in the JSON object, that you would like the program to access at startup. This will always be the initial
+    current working tenant after the program is started.
+
+
+14. With both the secret store and the API key store encrypted, execute the installation file from and elevated process
+    to secure the sensitive data. Use the batch file for Windows, and the bash file for *nix.
+
+
+15. Install the requirements from the docs/requirements.txt file with pip
+
+
+16. Launch aadshell.py from an elevated command line. The program will not execute unless root / administrator
+    permissions have been provided. If using nix, use sudo -E as library import issues may present themselves and
+    the E switch will preserve your user environment.
+
