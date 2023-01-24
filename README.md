@@ -20,7 +20,8 @@ Currently, the application allows the operator to perform the following actions
 </p>
 
 
-
+# Development
+AADShell was developed in both Windows and Debian Linux environments with python 3.9 and python 3.10 respectively.
 
 # Setup
 [Setup Instructions](https://github.com/wizardy0ga/_AADShell/blob/main/docs/setup_instructions.txt)
